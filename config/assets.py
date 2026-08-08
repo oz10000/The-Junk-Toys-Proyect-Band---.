@@ -14,7 +14,10 @@ ASSET_PARAMS: Dict[str, Dict] = {
     'BTC/USDT': {'min_score': 0.30, 'adx_threshold': 22, 'ker_threshold': 0.42},
     'ETH/USDT': {'min_score': 0.30, 'adx_threshold': 22, 'ker_threshold': 0.42},
     'SOL/USDT': {'min_score': 0.30, 'adx_threshold': 22, 'ker_threshold': 0.42},
-    # ... se puede extender
+    'XRP/USDT': {'min_score': 0.30, 'adx_threshold': 22, 'ker_threshold': 0.42},
+    'LTC/USDT': {'min_score': 0.30, 'adx_threshold': 22, 'ker_threshold': 0.42},
+    'BNB/USDT': {'min_score': 0.30, 'adx_threshold': 22, 'ker_threshold': 0.42},
+    'ADA/USDT': {'min_score': 0.30, 'adx_threshold': 22, 'ker_threshold': 0.42},
 }
 
 MAX_LEVERAGE: Dict[str, int] = {
