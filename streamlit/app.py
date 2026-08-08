@@ -1,15 +1,12 @@
 # streamlit/app.py
 """
 Punto de entrada de la aplicación Streamlit JUNK TOYS Ω.
-
-Este archivo inicializa la interfaz, gestiona el estado de sesión,
-organiza las pestañas y coordina el escaneo de mercado.
 """
 
 import streamlit as st
 import pandas as pd
 from datetime import datetime
-from config.base import CONFIG
+from config import CONFIG  # <--- CORREGIDO: ya no usa config.base
 from application.use_cases.scan_market import ScanMarket
 from infrastructure.exchanges import ExchangeFactory
 
@@ -100,7 +97,6 @@ with st.sidebar:
             st.session_state.signals = result.get('signals', [])
             st.session_state.data_dict = result.get('data', {})
             st.session_state.last_scan = datetime.now()
-            # Registrar historial de señales válidas
             for s in st.session_state.signals:
                 if s.is_valid:
                     st.session_state.signal_history.append({
@@ -137,72 +133,43 @@ tab_names = [
 ]
 tabs = st.tabs(tab_names)
 
-# ============================================================
-# PESTAÑA 1 — TRADE ÓPTIMO
-# ============================================================
+# Cada pestaña importa su render desde pages/
 with tabs[0]:
     from streamlit.pages.trade_optimal import render as render_trade_optimal
     render_trade_optimal(st.session_state.optimal)
 
-# ============================================================
-# PESTAÑA 2 — RANKING
-# ============================================================
 with tabs[1]:
     from streamlit.pages.ranking import render as render_ranking
     render_ranking(st.session_state.ranking)
 
-# ============================================================
-# PESTAÑA 3 — BACKTESTING
-# ============================================================
 with tabs[2]:
     from streamlit.pages.backtesting import render as render_backtesting
     render_backtesting()
 
-# ============================================================
-# PESTAÑA 4 — BTC/ETH/SOL
-# ============================================================
 with tabs[3]:
     from streamlit.pages.btc_eth_sol import render as render_btc_eth_sol
     render_btc_eth_sol(st.session_state.data_dict)
 
-# ============================================================
-# PESTAÑA 5 — OPTIMIZACIÓN
-# ============================================================
 with tabs[4]:
     from streamlit.pages.optimization import render as render_optimization
     render_optimization()
 
-# ============================================================
-# PESTAÑA 6 — DIAGNÓSTICO
-# ============================================================
 with tabs[5]:
     from streamlit.pages.diagnosis import render as render_diagnosis
     render_diagnosis(st.session_state.data_dict)
 
-# ============================================================
-# PESTAÑA 7 — EXCHANGES & WISE
-# ============================================================
 with tabs[6]:
     from streamlit.pages.exchanges import render as render_exchanges
     render_exchanges()
 
-# ============================================================
-# PESTAÑA 8 — FIRM SIGNALS Ω
-# ============================================================
 with tabs[7]:
     from streamlit.pages.firm_signals import render as render_firm_signals
     render_firm_signals(st.session_state.optimal)
 
-# ============================================================
-# PESTAÑA 9 — BOT DASHBOARD
-# ============================================================
 with tabs[8]:
     from streamlit.pages.bot_dashboard import render as render_bot
     render_bot()
 
-# ============================================================
-# PESTAÑA 10 — CONFIGURACIÓN
-# ============================================================
 with tabs[9]:
     from streamlit.pages.settings import render as render_settings
     render_settings()
