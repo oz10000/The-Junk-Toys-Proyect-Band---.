@@ -1,8 +1,4 @@
 # config/__init__.py
-"""
-Configuración centralizada del sistema JUNK TOYS Ω.
-"""
-
 from .base import CONFIG
 from .exchanges import EXCHANGE_CONFIGS, EXCHANGE_PRIORITY
 from .assets import ASSETS, ASSET_PARAMS, MAX_LEVERAGE
