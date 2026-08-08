@@ -1,12 +1,18 @@
 # streamlit/app.py
-"""
-Punto de entrada de la aplicación Streamlit JUNK TOYS Ω.
-"""
+import sys
+import os
+
+# ============================================================
+# FORZAR RUTA PARA IMPORTAR CONFIG
+# ============================================================
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if ROOT_DIR not in sys.path:
+    sys.path.insert(0, ROOT_DIR)
 
 import streamlit as st
 import pandas as pd
 from datetime import datetime
-from config import CONFIG  # <--- CORREGIDO: ya no usa config.base
+from config import CONFIG
 from application.use_cases.scan_market import ScanMarket
 from infrastructure.exchanges import ExchangeFactory
 
@@ -117,7 +123,7 @@ with st.sidebar:
     st.caption(f"Activos: {len(CONFIG.universe)}")
 
 # ============================================================
-# PESTAÑAS
+# PESTAÑAS (simplificadas para prueba)
 # ============================================================
 tab_names = [
     "🎯 Trade Óptimo",
@@ -133,46 +139,78 @@ tab_names = [
 ]
 tabs = st.tabs(tab_names)
 
-# Cada pestaña importa su render desde pages/
+# ============================================================
+# CADA PESTAÑA IMPORTA SU RENDER
+# ============================================================
 with tabs[0]:
-    from streamlit.pages.trade_optimal import render as render_trade_optimal
-    render_trade_optimal(st.session_state.optimal)
+    try:
+        from streamlit.pages.trade_optimal import render as render_trade_optimal
+        render_trade_optimal(st.session_state.optimal)
+    except ImportError:
+        st.warning("Página 'Trade Óptimo' no disponible aún.")
 
 with tabs[1]:
-    from streamlit.pages.ranking import render as render_ranking
-    render_ranking(st.session_state.ranking)
+    try:
+        from streamlit.pages.ranking import render as render_ranking
+        render_ranking(st.session_state.ranking)
+    except ImportError:
+        st.warning("Página 'Ranking' no disponible aún.")
 
 with tabs[2]:
-    from streamlit.pages.backtesting import render as render_backtesting
-    render_backtesting()
+    try:
+        from streamlit.pages.backtesting import render as render_backtesting
+        render_backtesting()
+    except ImportError:
+        st.warning("Página 'Backtesting' no disponible aún.")
 
 with tabs[3]:
-    from streamlit.pages.btc_eth_sol import render as render_btc_eth_sol
-    render_btc_eth_sol(st.session_state.data_dict)
+    try:
+        from streamlit.pages.btc_eth_sol import render as render_btc_eth_sol
+        render_btc_eth_sol(st.session_state.data_dict)
+    except ImportError:
+        st.warning("Página 'BTC/ETH/SOL' no disponible aún.")
 
 with tabs[4]:
-    from streamlit.pages.optimization import render as render_optimization
-    render_optimization()
+    try:
+        from streamlit.pages.optimization import render as render_optimization
+        render_optimization()
+    except ImportError:
+        st.warning("Página 'Optimización' no disponible aún.")
 
 with tabs[5]:
-    from streamlit.pages.diagnosis import render as render_diagnosis
-    render_diagnosis(st.session_state.data_dict)
+    try:
+        from streamlit.pages.diagnosis import render as render_diagnosis
+        render_diagnosis(st.session_state.data_dict)
+    except ImportError:
+        st.warning("Página 'Diagnóstico' no disponible aún.")
 
 with tabs[6]:
-    from streamlit.pages.exchanges import render as render_exchanges
-    render_exchanges()
+    try:
+        from streamlit.pages.exchanges import render as render_exchanges
+        render_exchanges()
+    except ImportError:
+        st.warning("Página 'Exchanges' no disponible aún.")
 
 with tabs[7]:
-    from streamlit.pages.firm_signals import render as render_firm_signals
-    render_firm_signals(st.session_state.optimal)
+    try:
+        from streamlit.pages.firm_signals import render as render_firm_signals
+        render_firm_signals(st.session_state.optimal)
+    except ImportError:
+        st.warning("Página 'Firm Signals Ω' no disponible aún.")
 
 with tabs[8]:
-    from streamlit.pages.bot_dashboard import render as render_bot
-    render_bot()
+    try:
+        from streamlit.pages.bot_dashboard import render as render_bot
+        render_bot()
+    except ImportError:
+        st.warning("Página 'Bot Dashboard' no disponible aún.")
 
 with tabs[9]:
-    from streamlit.pages.settings import render as render_settings
-    render_settings()
+    try:
+        from streamlit.pages.settings import render as render_settings
+        render_settings()
+    except ImportError:
+        st.warning("Página 'Configuración' no disponible aún.")
 
 # ============================================================
 # FOOTER
