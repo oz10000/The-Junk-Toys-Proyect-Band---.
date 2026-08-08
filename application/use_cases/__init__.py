@@ -4,4 +4,9 @@ from .run_backtest import RunBacktest
 from .manage_position import ManagePosition
 from .execute_order import ExecuteOrder
 
-__all__ = ['ScanMarket', 'RunBacktest', 'ManagePosition', 'ExecuteOrder']
+__all__ = [
+    'ScanMarket',
+    'RunBacktest',
+    'ManagePosition',
+    'ExecuteOrder'
+]
